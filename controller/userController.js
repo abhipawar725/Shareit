@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import multer from "multer";
 
 export const GetSignup = (req, res) => {
   res.render("signup");
@@ -73,4 +74,31 @@ export const Login = async (req, res) => {
 
 export const GetLogout = (req, res) => {
    res.clearCookie("token")
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, next) => {
+     next(null, "upload/profile")
+  },
+  filename: (req, file, next) => {
+     next(null, `${req.user.id}-${file.originalname}`)
+  }
+})
+
+export const profileUpload = multer({storage})
+
+export const CreateProfile = async (req, res) => {
+  try {
+       const path = req.file.path.replace(/\\/g, '/') 
+       const {id} = req.user 
+       console.log(req.user);
+       
+       const user = await User.findByIdAndUpdate(id, {picture: path}, {new: true})        
+       res.status(200).json({
+        message: "Profile updated successfully", 
+        picture: user.picture
+      })
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
 }

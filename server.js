@@ -17,6 +17,7 @@ app.use(cookieParser())
 
 app.set("view engine", "ejs")
 app.set("views", path.join(process.cwd(), "views"))
+app.set("upload", express.static("/upload"))
 
 app.use("/", userRoute)
 app.use("/", protectedRoute)
