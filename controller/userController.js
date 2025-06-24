@@ -74,6 +74,10 @@ export const Login = async (req, res) => {
 
 export const GetLogout = (req, res) => {
    res.clearCookie("token")
+   res.status(200).json({
+    message: "logout successfully",
+    redirect: 'login'
+   })
 }
 
 const storage = multer.diskStorage({
