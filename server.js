@@ -1,1 +1,16 @@
 import dotenv from "dotenv"
+import express from "express"
+import dbConnect from "./config/dbConnect.js"
+import userRoute from "./routes/userRoutes.js"
+
+dotenv.config()
+const app = express()
+
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
+app.use("/", userRoute)
+
+dbConnect()
+const PORT = process.env.PORT
+app.listen(PORT, () => {console.log("app is connected", PORT)})
