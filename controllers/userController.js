@@ -2,7 +2,7 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 
 export const getSignup = (req, res) => {
-  res.send("signup page");
+  res.render('signup')
 };
 
 export const getLogin = (req, res) => {
