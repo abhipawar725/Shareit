@@ -28,6 +28,10 @@ const userSchema = new Schema(
         "Password should be at least 8 characters, one upper, one lower, one number and one special",
       ],
     },
+    profile: {
+      type: String,
+      trim: true
+    }
   },
   { timestamps: true }
 );
