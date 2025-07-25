@@ -1,13 +1,18 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
 
 export const getSignup = (req, res) => {
   res.render('signup')
 };
 
 export const getLogin = (req, res) => {
-  res.send("login page");
+  res.render('login')
 };
+
+export const getDashboard = (req, res) => {
+  res.render('dashboard')
+}
 
 export const Signup = async (req, res) => {
   try {
@@ -29,6 +34,7 @@ export const Signup = async (req, res) => {
         email: user.email,
         createdAt: user.createdAt,
       },
+      redirect: 'login'
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -45,10 +51,24 @@ export const Login = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if(!isMatch) return res.status(409).json({message: "Incorrect Credentials"}) 
-        
-    res.status(200).json({message: "Login Successfully"})    
+
+    const payload = {
+      id: user._id,
+      fullname: user.fullname,
+      email: user.email
+    }  
+
+    const token = jwt.sign(payload, process.env.JWT_TOKEN, {expiresIn: '1d'})
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000
+    })
+    res.status(200).json({message: "Login Successfully", redirect: 'dashboard'})    
 
   } catch (error) {
     res.status(500).json({message: error.message})
   }
 };
+
