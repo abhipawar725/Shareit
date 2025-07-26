@@ -3,15 +3,27 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 
 export const getSignup = (req, res) => {
-  res.render('signup')
+  res.render('auth/signup', {
+    layout: 'layouts/auth'
+  })
 };
 
 export const getLogin = (req, res) => {
-  res.render('login')
+  res.render('auth/login',{
+    layout: 'layouts/auth'
+  })
 };
 
 export const getDashboard = (req, res) => {
-  res.render('dashboard')
+  res.render('dashboard/index', {
+    layout: 'layouts/main'
+  })
+}
+
+export const getFiles = (req, res) => {
+  res.render('files/index', {
+    layout: 'layouts/main'
+  })
 }
 
 export const Signup = async (req, res) => {

@@ -10,6 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<h1>dashboard</h1>
+<div class="w-100">
+    <%- include('../partials/sidebar') %>
+    <main style="width: calc(100% - 280px); margin-left: 280px; float: left;" class="bg-white p-4 min-vh-100 overflow-y-auto">
+    <%- body %>    
+    </main>
+</div>
 </body>
 </html>
