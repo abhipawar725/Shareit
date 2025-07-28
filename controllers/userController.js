@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import fs from "fs"
 
 export const getSignup = (req, res) => {
   res.render('auth/signup', {
@@ -86,11 +87,20 @@ export const Login = async (req, res) => {
 
 export const uploadProfileImage = async (req, res) => {
      try {
-      const path = req.file.path.replace(/\\/g, '/')        
+      const path = req.file.path.replace(/\\/g, '/')          
+       
       const {id} = res.locals.user
       if(!id) return res.status(404).json({message: "Invalid user id"})
-      const user = await User.findByIdAndUpdate(id, {profile: path}, {new: true})
-      if(!user) return res.status(401).json({message: "Invalid user"})
+       const user = await User.findById(id)
+       if(!user) return res.status(401).json({message: "Invalid user"})
+       if(user.profile && fs.existsSync(user.profile)){
+        fs.unlink(user.profile, (err) => {
+          if(err) console.error("error file deleted", err)
+        })
+       }  
+          
+       await User.findByIdAndUpdate(id, { profile: path }, { new: true });
+
        res.status(200).json({message: "Profile updated successfully", profile: user.profile}) 
      } catch (error) {
         res.status(500).json({message: error.message})         
