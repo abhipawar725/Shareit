@@ -14,6 +14,7 @@ app.use(expressLayouts)
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(express.static("public"))
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.set("view engine", 'ejs')
 app.set("views", path.join(process.cwd(), "views"))
 app.set("layout", 'layouts/main')

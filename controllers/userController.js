@@ -86,12 +86,12 @@ export const Login = async (req, res) => {
 
 export const uploadProfileImage = async (req, res) => {
      try {
-      const path = req.file.path.replace(/\\/g, '/')
-      const {id} = req.user
+      const path = req.file.path.replace(/\\/g, '/')        
+      const {id} = res.locals.user
       if(!id) return res.status(404).json({message: "Invalid user id"})
       const user = await User.findByIdAndUpdate(id, {profile: path}, {new: true})
       if(!user) return res.status(401).json({message: "Invalid user"})
-       res.status(200).json({message: "Profile updated successfully"}) 
+       res.status(200).json({message: "Profile updated successfully", profile: user.profile}) 
      } catch (error) {
         res.status(500).json({message: error.message})         
      }
