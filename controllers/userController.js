@@ -85,10 +85,18 @@ export const Login = async (req, res) => {
   }
 };
 
+export const Logout = (req, res) => {
+  try {
+    res.clearCookie('token')
+    res.redirect('login')
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
 export const uploadProfileImage = async (req, res) => {
      try {
       const path = req.file.path.replace(/\\/g, '/')          
-       
       const {id} = res.locals.user
       if(!id) return res.status(404).json({message: "Invalid user id"})
        const user = await User.findById(id)
@@ -99,9 +107,10 @@ export const uploadProfileImage = async (req, res) => {
         })
        }  
           
-       await User.findByIdAndUpdate(id, { profile: path }, { new: true });
+      const updatedUser =  await User.findByIdAndUpdate(id, { profile: path }, { new: true });
+       const profile = updatedUser.profile     
 
-       res.status(200).json({message: "Profile updated successfully", profile: user.profile}) 
+       res.status(200).json({message: "Profile updated successfully", profile}) 
      } catch (error) {
         res.status(500).json({message: error.message})         
      }
