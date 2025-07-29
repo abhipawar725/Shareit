@@ -2,6 +2,7 @@ import dotenv from "dotenv"
 import express from "express"
 import dbConnect from "./config/dbConnect.js"
 import userRoute from "./routes/userRoutes.js"
+import fileRoute from "./routes/fileRoute.js"
 import cookieParser from "cookie-parser"
 import expressLayouts from "express-ejs-layouts"
 import path, {join} from "path"
@@ -22,6 +23,7 @@ app.use(cookieParser())
 
 // Routes
 app.use("/", userRoute)
+app.use("/", fileRoute)
 
 dbConnect()
 const PORT = process.env.PORT
