@@ -8,6 +8,15 @@ const fileSchema = new Schema({
     },
     file: {
         type: String,
+        required: true,
+        trim: true
+    },
+    type: {
+       type: String,
+       required: true
+    },
+    size: {
+        type: Number,
         required: true
     }
 }, { timestamps: true })

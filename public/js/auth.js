@@ -35,7 +35,6 @@ const signup = async (e) => {
     }
     try {
         const res = await axios.post("http://localhost:8080/api/signup", allData)
-        console.log(res.data);
         Swal.fire({
             text: res.data.message,
             icon: "success"
