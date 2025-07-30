@@ -34,6 +34,10 @@ export const createFile = async (req, res) => {
 
     if (!id) return res.status(401).json({ message: "Invalid user" });
 
+        if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
     const { originalname, size, mimetype } = req.file;
 
     const file = await Files.create({

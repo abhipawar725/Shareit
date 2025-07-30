@@ -1,9 +1,31 @@
 <div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="bg-primary text-white rounded d-flex align-items-center justify-content-center position-relative"
+                style="min-height: 150px;">
+                <h1 class="fs-4 fw-bold text-center">Upload your file</h1>
+                <input type="file" class="position-absolute top-0 left-0 w-100 h-100" style="opacity: 0;"
+                    onchange="uploadFile(event)">
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
-            <div class="bg-primary text-white rounded d-flex align-items-center justify-content-center position-relative" style="min-height: 150px;">
-                <h1 class="fs-4 fw-bold text-center">Upload your file</h1>
-                <input type="file" class="position-absolute top-0 left-0 w-100 h-100" style="opacity: 0;" onchange="uploadFile(event)">
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
