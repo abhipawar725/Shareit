@@ -2,12 +2,24 @@ const uploadFile = async (e) => {
     const file = e.target.files[0]
     const formData = new FormData()
     formData.append('file', file)
+
+    const progresser = document.querySelector('#progress') 
+    const progressBar = document.querySelector('#uploadProgressBar')
+    const fileName = document.querySelector('#file-name')
+    const fileSize = document.querySelector('#file-size') 
+
+    fileName.innerHTML = file.name
+    
+
     try {
-        const res = await axios.post("http://localhost:8080/api/file", formData)
-        Swal.fire({
-            text: res.data.message,
-            icon: "success"
-        });
+        const res = await axios.post("http://localhost:8080/api/file", formData, {onUploadProgress: function (axiosProgressEvent) {
+              const {loaded, total, progress, bytes, estimated, rate, upload } = axiosProgressEvent
+              console.log(loaded);
+              fileSize.innerHTML = `${(total / (1024 * 1024)).toFixed(2)} MB`
+              progressBar.innerHTML = `${progress * 100}%`
+              progressBar.style.width = `${progress * 100}%`
+              progresser.style.display = 'flex'
+    }})
         fetchFiles()
     } catch (error) {
         Swal.fire({

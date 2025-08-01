@@ -1,4 +1,4 @@
-    <aside style="width: 280px;" class="bg-secondary text-white min-vh-100 position-fixed top-0 left-0">
+    <aside style="width: 280px;" class="bg-light min-vh-100 position-fixed top-0 left-0">
        <div class="d-flex align-items-center justify-content-center fw-bold fs-3 p-3">Tradologie</div>
        <div class="d-flex align-items-center justify-content-center mt-3 rounded-circle mx-auto overflow-hidden position-relative" style="width: 80px; height: 80px;">
         <img src="<%= user.profile %>" alt="<%= user.fullname %>" id="profile-image" class="rounded-circle bg-white border overflow-hidden" style="width: 80px; height: 80px;">
@@ -8,5 +8,9 @@
         <p class="m-0 fw-bold"><%= user.fullname %></p>
         <small><%= user.email %></small>
        </div>
-       <a href="/logout">Logout</a>          
+       <div class="d-flex flex-column gap-2 p-3">
+         <a href="/dashboard" class="btn btn-primary text-start py-2 px-3">Dashboard</a>
+         <a href="/files" class="btn btn-primary text-start py-2 px-3">Files</a>  
+         <a href="/logout" class="btn btn-primary text-start py-2 px-3">Logout</a>
+       </div>          
     </aside>
