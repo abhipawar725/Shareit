@@ -18,6 +18,9 @@ const fileSchema = new Schema({
     size: {
         type: Number,
         required: true
+    },
+    path: {
+        type: String
     }
 }, { timestamps: true })
 

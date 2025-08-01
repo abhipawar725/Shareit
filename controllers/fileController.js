@@ -30,6 +30,7 @@ export const getFileById = async (req, res) => {
 
 export const createFile = async (req, res) => {
   try {
+    const path = req.file.path.replace(/\\/g, '/')
     const { id } = res.locals.user;
 
     if (!id) return res.status(401).json({ message: "Invalid user" });
@@ -45,6 +46,7 @@ export const createFile = async (req, res) => {
       file: originalname,
       type: mimetype,
       size,
+      path
     });
 
     res.status(200).json({ message: "file uploaded successfully", file });
@@ -67,3 +69,14 @@ export const deleteFileById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const downloadFile = async (req, res) => {
+  try {
+    const {path} = req.body
+    res.download(path, (err) => {
+      if(err) return res.status(404).json({message: "file not found"})
+    }) 
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+}

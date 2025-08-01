@@ -22,7 +22,7 @@ const fetchFiles = async () => {
         const res = await axios.get("http://localhost:8080/api/files")
         const data = res.data.files
         const tableBody = document.querySelector('#table-body')
-        tableBody.innerHTML = ""
+        tableBody.innerHTML = ""        
         data.forEach((item, index) => {
                        const ui = `
                         <tr>
@@ -32,8 +32,8 @@ const fetchFiles = async () => {
                             <td>${item.size}</td>
                             <td>${moment(item.createdAt).format("DD/MM/YYYY")}</td>
                             <td>
-                                <button type="button" class="btn btn-success"><i class="ri-download-2-line"></i></button>
-                                <button type="button" class="btn btn-primary"><i class="ri-edit-line"></i></button>
+                                <button type="button" class="btn btn-success" onclick="downloadFile('${item.path}', '${item.file}')"><i class="ri-download-2-line"></i></button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="ri-share-line"></i></button>
                                 <button type="button" class="btn btn-danger" onclick="deleteFile('${item._id}')"><i class="ri-delete-bin-line"></i></button>
                             </td>
                         </tr>
@@ -60,5 +60,21 @@ const deleteFile = async (id) => {
       text: error?.response?.data?.message || "Error deleting file",
       icon: "error"
     });
+  }
+}
+
+const downloadFile = async (path, filename) => {
+  try {
+    const options = {
+      responseType: 'blob'
+    }
+    const res = await axios.post("http://localhost:8080/api/file/download", {path}, options)
+    const url = URL.createObjectURL(res.data)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+  } catch (error) {
+    console.log(error.response.data.message);
   }
 }

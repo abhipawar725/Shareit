@@ -11,14 +11,18 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
 </head>
+
 <body>
-<div class="w-100">
-    <%- include('../partials/sidebar') %>
-    <main style="width: calc(100% - 280px); margin-left: 280px; float: left;" class="bg-white p-4 min-vh-100 overflow-y-auto">
-    <%- body %>    
-    </main>
-</div>
-<script src="/js/user-profile.js"></script>
-<script src="/js/file.js"></script>
+    <div class="w-100">
+        <%- include('../partials/sidebar') %>
+            <main style="width: calc(100% - 280px); margin-left: 280px; float: left;"
+                class="bg-white p-4 min-vh-100 overflow-y-auto">
+                <%- body %>
+            </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/user-profile.js"></script>
+    <script src="/js/file.js"></script>
 </body>
+
 </html>
