@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Files from "../models/fileModel.js";
+import nodemailer from "nodemailer"
+
 
 export const readFiles = async (req, res) => {
   try {
@@ -78,5 +80,31 @@ export const downloadFile = async (req, res) => {
     }) 
   } catch (error) {
     res.status(500).json({message: error.message})
+  }
+}
+
+export const shareFile = async (req, res) => {
+  try {
+    console.log(req.body);
+ 
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_EMAIL,
+        password: process.env.SMTP_PASSWORD 
+      }
+    })
+
+    await transporter.sendMail({
+      from: process.env.sendMail,
+      to: 'abhishek.p.tradologie@gmail.com',
+      subject: 'testing',
+      text: 'hello i am abhi'
+    })    
+
+    res.status(200).json({message: "mail send"})
+
+  } catch (error) {
+    
   }
 }
